@@ -20,14 +20,3 @@ When the User clicks on the 2nd card:
 
 - [ ] Use can choose between multiple levels of difficulty (Easy, Medium, Hard). Increased difficulty means: decreasing the time available to complete and/or increasing the number of cards
 - [ ] User can see the game statistics (nr. of times he won / he lost, best time for each level)
-
-## Useful links and resources
-
-- [Wikipedia](<https://en.wikipedia.org/wiki/Concentration_(game)>)
-
-## Example projects
-
-- [Flip - card memory game](https://codepen.io/zerospree/full/bNWbvW)
-- [Memory Game](https://jdmedlock.github.io/memorygame/)
-- [SMB3 Memory Card Game](https://codepen.io/hexagoncircle/full/OXBJxV)
-- [BHMBS - Memory Game](https://barhouum7.github.io/JS-MemoryGame.github.io/)
