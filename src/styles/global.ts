@@ -8,16 +8,12 @@ export default createGlobalStyle`
 
   ${normalize}
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+  body {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: ${({ theme }) => theme.backgroundColor};
     color: ${({ theme }) => theme.color};
-    transition: all 0.2s ease-in-out;
   }
 
   #__next {
