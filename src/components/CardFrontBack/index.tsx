@@ -12,6 +12,10 @@ const CardFrontBackWrapper = styled.article`
   &.-active {
     transform: rotateY(180deg);
   }
+
+  &.-match {
+    transform: rotateY(180deg);
+  }
 `;
 
 const Front = styled.div`
@@ -26,6 +30,21 @@ const Back = styled.div`
 `;
 
 const CardFrontBack = () => {
+  const cards = [
+    {
+      icon: 'typescript',
+      altIcon: 'TypeScript Logo',
+    },
+    {
+      icon: 'javascript',
+      altIcon: 'JavaScript Logo',
+    },
+    {
+      icon: 'nextjs',
+      altIcon: 'Next JS Logo',
+    },
+  ];
+
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const origin = e.target as Element;
     const cardFrontBack = origin.parentNode?.parentNode?.parentNode?.parentNode as HTMLElement;
@@ -34,15 +53,22 @@ const CardFrontBack = () => {
   };
 
   return (
-    <CardFrontBackWrapper onClick={(e) => handleClick(e)}>
-      <Front>
-        <CardGame />
-      </Front>
+    <>
+      {cards.map((card) => (
+        <CardFrontBackWrapper
+          key={card.icon}
+          onClick={(e) => handleClick(e)}
+        >
+          <Front>
+            <CardGame />
+          </Front>
 
-      <Back>
-        <CardGame icon="typescript" alt="typescript logo" />
-      </Back>
-    </CardFrontBackWrapper>
+          <Back>
+            <CardGame icon={card.icon} alt={card.altIcon} />
+          </Back>
+        </CardFrontBackWrapper>
+      ))}
+    </>
   );
 };
 
