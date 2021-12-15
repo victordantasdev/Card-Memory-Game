@@ -12,12 +12,14 @@ const Card = styled.article`
   align-items: center;
   width: 130px;
   height: 160px;
+  border-radius: 8px;
   background-color: #051932;
   border: 2px solid ${({ theme }) => theme.primary};
 
   & > img {
     width: 100%;
     height: 100%;
+    border-radius: 8px;
   }
 
   &:hover {
