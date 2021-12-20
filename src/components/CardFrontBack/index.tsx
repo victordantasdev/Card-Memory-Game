@@ -47,7 +47,28 @@ const CardFrontBack = () => {
       icon: 'nextjs',
       altIcon: 'Next JS Logo',
     },
+    {
+      icon: 'html',
+      altIcon: 'HTML Logo',
+    },
+    {
+      icon: 'css',
+      altIcon: 'CSS Logo',
+    },
+    {
+      icon: 'linux',
+      altIcon: 'Linux Logo',
+    },
   ];
+
+  const randomCards: { icon: string, altIcon: string }[] = [];
+  while (randomCards.length < cards.length) {
+    const randNum = Math.floor(Math.random() * cards.length);
+
+    if (!randomCards.includes(cards[randNum])) {
+      randomCards.push(cards[randNum]);
+    }
+  }
 
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const origin = e.target as Element;
@@ -58,7 +79,7 @@ const CardFrontBack = () => {
 
   return (
     <>
-      {cards.map((card) => (
+      {randomCards.map((card) => (
         <CardFrontBackWrapper
           key={card.icon}
           onClick={(e) => handleClick(e)}
