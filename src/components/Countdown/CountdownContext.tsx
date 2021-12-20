@@ -22,7 +22,7 @@ export const CountdownConext = createContext({} as CountdownContextData);
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const fullTime = 25;
+  const fullTime = 5;
 
   const [time, setTime] = useState(fullTime * 60);
   const [isActive, setIsActive] = useState(false);
@@ -33,6 +33,19 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
 
   function startCountdown() {
     setIsActive(true);
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach((card) => {
+      card.classList.add('-active');
+    });
+
+    setTimeout(() => {
+      cards.forEach((card) => {
+        card.classList.remove('-active');
+        card.classList.remove('-locked');
+      });
+    }, 1000);
   }
 
   function resetCountdown() {
