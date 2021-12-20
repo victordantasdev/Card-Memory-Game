@@ -11,6 +11,7 @@ interface CountdownContextData {
   isActive: boolean;
   startCountdown: () => void;
   resetCountdown: () => void;
+  stopCountdown: () => void;
 }
 
 interface CountdownProviderProps {
@@ -31,17 +32,17 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
+  const cards = () => document.querySelectorAll('.card');
+
   function startCountdown() {
     setIsActive(true);
 
-    const cards = document.querySelectorAll('.card');
-
-    cards.forEach((card) => {
+    cards().forEach((card) => {
       card.classList.add('-active');
     });
 
     setTimeout(() => {
-      cards.forEach((card) => {
+      cards().forEach((card) => {
         card.classList.remove('-active');
         card.classList.remove('-locked');
       });
@@ -53,6 +54,18 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     setIsActive(false);
     setTime(fullTime * 60);
     setHasFinished(false);
+
+    cards().forEach((card) => {
+      card.classList.add('-locked');
+      card.classList.remove('-match');
+    });
+  }
+
+  function stopCountdown() {
+    clearTimeout(countdownTimeout);
+    setIsActive(false);
+    setTime(time);
+    setHasFinished(false);
   }
 
   useEffect(() => {
@@ -63,6 +76,10 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     } else if (isActive && time === 0) {
       setHasFinished(true);
       setIsActive(false);
+
+      cards().forEach((card) => {
+        card.classList.add('-locked');
+      });
     }
   }, [isActive, time]);
 
@@ -74,6 +91,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       isActive,
       startCountdown,
       resetCountdown,
+      stopCountdown,
     }}
     >
       {children}

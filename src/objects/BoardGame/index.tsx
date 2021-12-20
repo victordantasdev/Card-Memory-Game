@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import CardFrontBack from '../../components/CardFrontBack';
 
@@ -18,7 +18,6 @@ const BoardGameWrapper = styled.section`
 
 const BoardGame: React.FC<Props> = ({ totalCards }) => {
   const amoutCards = [...Array<string>(totalCards)];
-  const [winMessage, setWinMessage] = useState('');
 
   const handleClick = () => {
     const cardsActive = document.querySelectorAll('.-active');
@@ -37,9 +36,6 @@ const BoardGame: React.FC<Props> = ({ totalCards }) => {
         cardsActive.forEach((card) => {
           card.classList.replace('-active', '-match');
         });
-
-        const cardsMatched = document.querySelectorAll('.-match');
-        if (cardsMatched.length === amoutCards.length * 3) setWinMessage('yay! you won');
       }
 
       setTimeout(() => {
@@ -59,7 +55,6 @@ const BoardGame: React.FC<Props> = ({ totalCards }) => {
       <BoardGameWrapper onClick={() => handleClick()}>
         {amoutCards.map((value, index) => <CardFrontBack key={index} />)}
       </BoardGameWrapper>
-      <span style={{ color: 'green' }}>{winMessage}</span>
     </>
   );
 };
