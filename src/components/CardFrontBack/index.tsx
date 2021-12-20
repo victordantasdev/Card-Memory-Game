@@ -9,6 +9,10 @@ const CardFrontBackWrapper = styled.article`
   height: 160px;
   transition: transform 600ms cubic-bezier(0.42, 0, 0.56, 1.61);
 
+  &.-locked {
+    pointer-events: none;
+  }
+
   &.-active {
     transform: rotateY(180deg);
   }
@@ -58,6 +62,7 @@ const CardFrontBack = () => {
         <CardFrontBackWrapper
           key={card.icon}
           onClick={(e) => handleClick(e)}
+          className="card -locked"
         >
           <Front>
             <CardGame />
