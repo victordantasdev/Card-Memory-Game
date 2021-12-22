@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const CountdownContainer = styled.div`
   display: flex;
   align-items: center;
-  font-weight: 600;
   color: ${({ theme }) => theme.color};
 
   & > div {
@@ -38,7 +37,7 @@ export const CountdownContainer = styled.div`
 `;
 
 export const CountdownButton = styled.button`
-  width: 100%;
+  width: 150px;
   height: 2rem;
 
   margin-top: 1rem;
@@ -61,21 +60,22 @@ export const CountdownButton = styled.button`
   transition: background-color 0.2s;
 
   &:not(:disabled):hover {
-    background: ${({ theme }) => theme.title};
+    cursor: pointer;
+    background: ${({ theme }) => theme.secondary};
   }
 `;
 
 export const CountdownButtonActive = styled.button`
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.secondary};
   color: ${({ theme }) => theme.color};
 
   &:not(:disabled):hover {
-    background: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.secondary};
     color: ${({ theme }) => theme.color};
   }
 
   &:disabled {
-    background: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.secondary};
     color: ${({ theme }) => theme.color};
     cursor: not-allowed;
   }

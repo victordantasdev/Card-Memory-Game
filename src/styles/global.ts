@@ -4,6 +4,8 @@ import { normalize } from 'styled-normalize';
 export default createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400px;
   }
 
   ${normalize}
