@@ -9,6 +9,7 @@ interface CountdownContextData {
   seconds: number;
   hasFinished: boolean;
   isActive: boolean;
+  bestTime: string;
   startCountdown: () => void;
   resetCountdown: () => void;
   stopCountdown: () => void;
@@ -28,6 +29,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const [time, setTime] = useState(fullTime * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
+  const [bestTime, setBestTime] = useState('05:00');
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -66,6 +68,14 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     setIsActive(true);
     setTime(time);
     setHasFinished(false);
+
+    const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
+    const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
+    const bestTimeStr = `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
+    const $bestTime = document.querySelector('.best-time')!.textContent!;
+    if (bestTimeStr >= $bestTime) {
+      setBestTime(bestTimeStr);
+    }
   }
 
   useEffect(() => {
@@ -89,6 +99,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       seconds,
       hasFinished,
       isActive,
+      bestTime,
       startCountdown,
       resetCountdown,
       stopCountdown,
