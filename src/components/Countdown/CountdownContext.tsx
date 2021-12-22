@@ -3,6 +3,7 @@
 import React, {
   createContext, ReactNode, useEffect, useState,
 } from 'react';
+import { parseCookies, setCookie } from 'nookies';
 
 interface CountdownContextData {
   minutes: number;
@@ -24,12 +25,13 @@ export const CountdownConext = createContext({} as CountdownContextData);
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const fullTime = 5;
+  const fullTime = 0.5;
+  const cookies = parseCookies();
 
   const [time, setTime] = useState(fullTime * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
-  const [bestTime, setBestTime] = useState('05:00');
+  const [bestTime, setBestTime] = useState(cookies.BEST_TIME || '00:00');
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -72,9 +74,13 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
     const bestTimeStr = `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
-    const $bestTime = document.querySelector('.best-time')!.textContent!;
-    if (bestTimeStr >= $bestTime) {
+    if (bestTimeStr <= cookies.BEST_TIME || bestTimeStr !== '00:00') {
       setBestTime(bestTimeStr);
+
+      setCookie(null, 'BEST_TIME', bestTimeStr, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
     }
   }
 
