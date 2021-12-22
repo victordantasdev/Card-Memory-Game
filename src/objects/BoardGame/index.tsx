@@ -1,11 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CardFrontBack from '../../components/CardFrontBack';
-
-interface Props {
-  totalCards: number;
-}
+import { CountdownConext } from '../../components/Countdown/CountdownContext';
 
 const BoardGameWrapper = styled.section`
   display: flex;
@@ -16,8 +13,8 @@ const BoardGameWrapper = styled.section`
   perspective: 600px;
 `;
 
-const BoardGame: React.FC<Props> = ({ totalCards }) => {
-  const amoutCards = [...Array<string>(totalCards)];
+const BoardGame = () => {
+  const { stopCountdown } = useContext(CountdownConext);
 
   const handleClick = () => {
     const cardsActive = document.querySelectorAll('.-active');
@@ -43,6 +40,12 @@ const BoardGame: React.FC<Props> = ({ totalCards }) => {
           card.classList.remove('-active');
         });
       }, 600);
+
+      const totalCards = document.querySelectorAll('.card');
+      const totalMatch = document.querySelectorAll('.-match');
+      if (totalMatch.length === totalCards.length) {
+        stopCountdown();
+      }
     } else if (cardsActive.length > 2) {
       cardsActive.forEach((card) => {
         card.classList.remove('-active');
@@ -53,7 +56,7 @@ const BoardGame: React.FC<Props> = ({ totalCards }) => {
   return (
     <>
       <BoardGameWrapper onClick={() => handleClick()}>
-        {amoutCards.map((value, index) => <CardFrontBack key={index} />)}
+        <CardFrontBack />
       </BoardGameWrapper>
     </>
   );

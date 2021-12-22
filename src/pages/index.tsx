@@ -15,9 +15,9 @@ const HomeWrapper = styled.div`
 const Home = () => (
   <HomeWrapper>
     <h1>Card-Memory-Game</h1>
-    <BoardGame totalCards={2} />
 
     <CountdownProvider>
+      <BoardGame />
       <Countdown />
     </CountdownProvider>
   </HomeWrapper>
