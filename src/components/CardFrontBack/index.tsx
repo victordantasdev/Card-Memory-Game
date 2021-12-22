@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardGame from '../CardGame';
+import CardsInfo from './CardsInfo';
 
 const CardFrontBackWrapper = styled.article`
   position: relative;
@@ -34,41 +35,7 @@ const Back = styled.div`
 `;
 
 const CardFrontBack = () => {
-  const cards = [
-    {
-      icon: 'typescript',
-      altIcon: 'TypeScript Logo',
-    },
-    {
-      icon: 'javascript',
-      altIcon: 'JavaScript Logo',
-    },
-    {
-      icon: 'nextjs',
-      altIcon: 'Next JS Logo',
-    },
-    {
-      icon: 'html',
-      altIcon: 'HTML Logo',
-    },
-    {
-      icon: 'css',
-      altIcon: 'CSS Logo',
-    },
-    {
-      icon: 'linux',
-      altIcon: 'Linux Logo',
-    },
-  ];
-
-  const randomCards: { icon: string, altIcon: string }[] = [];
-  while (randomCards.length < cards.length) {
-    const randNum = Math.floor(Math.random() * cards.length);
-
-    if (!randomCards.includes(cards[randNum])) {
-      randomCards.push(cards[randNum]);
-    }
-  }
+  const cards = CardsInfo;
 
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const origin = e.target as Element;
@@ -79,9 +46,9 @@ const CardFrontBack = () => {
 
   return (
     <>
-      {randomCards.map((card) => (
+      {cards.map((card) => (
         <CardFrontBackWrapper
-          key={card.icon}
+          key={card.id}
           onClick={(e) => handleClick(e)}
           className="card -locked"
         >

@@ -63,7 +63,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
 
   function stopCountdown() {
     clearTimeout(countdownTimeout);
-    setIsActive(false);
+    setIsActive(true);
     setTime(time);
     setHasFinished(false);
   }
