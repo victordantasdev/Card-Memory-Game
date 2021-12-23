@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { setCookie } from 'nookies';
 import CardFrontBack from '../../components/CardFrontBack';
 import { CountdownConext } from '../../components/Countdown/CountdownContext';
+import Confetti from '../../components/Confetti';
 
 const BoardGameWrapper = styled.section`
   display: flex;
@@ -16,6 +17,8 @@ const BoardGameWrapper = styled.section`
 
 const BoardGame = () => {
   const {
+    win,
+    setWin,
     winTimes,
     setWinTimes,
     stopCountdown,
@@ -46,10 +49,13 @@ const BoardGame = () => {
         });
       }, 600);
 
+      // user win
       const totalCards = document.querySelectorAll('.card');
       const totalMatch = document.querySelectorAll('.-match');
       if (totalMatch.length === totalCards.length) {
+        new Audio('/sounds/win.mp3').play();
         stopCountdown();
+        setWin(true);
 
         setWinTimes(Number(winTimes) + 1);
         setCookie(null, 'WIN_TIMES', String(winTimes + 1), {
@@ -66,6 +72,7 @@ const BoardGame = () => {
 
   return (
     <>
+      {win && <Confetti />}
       <BoardGameWrapper onClick={() => handleClick()}>
         <CardFrontBack />
       </BoardGameWrapper>
