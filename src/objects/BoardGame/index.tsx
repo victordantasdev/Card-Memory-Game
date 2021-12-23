@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { setCookie } from 'nookies';
 import CardFrontBack from '../../components/CardFrontBack';
 import { CountdownConext } from '../../components/Countdown/CountdownContext';
 
@@ -14,7 +15,11 @@ const BoardGameWrapper = styled.section`
 `;
 
 const BoardGame = () => {
-  const { stopCountdown } = useContext(CountdownConext);
+  const {
+    winTimes,
+    setWinTimes,
+    stopCountdown,
+  } = useContext(CountdownConext);
 
   const handleClick = () => {
     const cardsActive = document.querySelectorAll('.-active');
@@ -45,6 +50,12 @@ const BoardGame = () => {
       const totalMatch = document.querySelectorAll('.-match');
       if (totalMatch.length === totalCards.length) {
         stopCountdown();
+
+        setWinTimes(Number(winTimes) + 1);
+        setCookie(null, 'WIN_TIMES', String(winTimes + 1), {
+          maxAge: 30 * 24 * 60 * 60,
+          path: '/',
+        });
       }
     } else if (cardsActive.length > 2) {
       cardsActive.forEach((card) => {

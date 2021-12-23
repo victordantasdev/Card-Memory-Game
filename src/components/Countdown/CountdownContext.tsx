@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, {
-  createContext, ReactNode, useEffect, useState,
+  createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState,
 } from 'react';
 import { parseCookies, setCookie } from 'nookies';
 
@@ -11,6 +11,9 @@ interface CountdownContextData {
   hasFinished: boolean;
   isActive: boolean;
   bestTime: string;
+  lostTimes: number;
+  winTimes: number;
+  setWinTimes: Dispatch<SetStateAction<number>>;
   startCountdown: () => void;
   resetCountdown: () => void;
   stopCountdown: () => void;
@@ -25,13 +28,15 @@ export const CountdownConext = createContext({} as CountdownContextData);
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const fullTime = 0.5;
+  const fullTime = 0.1;
   const cookies = parseCookies();
 
   const [time, setTime] = useState(fullTime * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
   const [bestTime, setBestTime] = useState(cookies.BEST_TIME || '00:00');
+  const [lostTimes, setLostTimes] = useState(Number(cookies.LOST_TIMES) || 0);
+  const [winTimes, setWinTimes] = useState(Number(cookies.WIN_TIMES) || 0);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -90,11 +95,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
         setTime(time - 1);
       }, 1000);
     } else if (isActive && time === 0) {
-      setHasFinished(true);
-      setIsActive(false);
-
-      cards().forEach((card) => {
-        card.classList.add('-locked');
+      resetCountdown();
+      setLostTimes(Number(lostTimes) + 1);
+      setCookie(null, 'LOST_TIMES', String(lostTimes + 1), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
       });
     }
   }, [isActive, time]);
@@ -106,6 +111,9 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       hasFinished,
       isActive,
       bestTime,
+      lostTimes,
+      winTimes,
+      setWinTimes,
       startCountdown,
       resetCountdown,
       stopCountdown,

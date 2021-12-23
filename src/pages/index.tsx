@@ -23,7 +23,7 @@ const GameData = styled.div`
 
 const Home = () => (
   <HomeWrapper>
-    <h1>Card-Memory-Game</h1>
+    <h1>Card Memory Game</h1>
 
     <CountdownProvider>
       <BoardGame />
