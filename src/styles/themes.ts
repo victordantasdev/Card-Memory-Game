@@ -6,6 +6,8 @@ const dark = {
 
   primary: '#bd93f9',
   secondary: '#ff5555',
+
+  grey: '#a2a2a2',
 };
 
 export default dark;
