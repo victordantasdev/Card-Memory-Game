@@ -6,19 +6,23 @@ import React, {
 import { parseCookies, setCookie } from 'nookies';
 
 interface CountdownContextData {
+  win: boolean;
   minutes: number;
   seconds: number;
-  hasFinished: boolean;
-  isActive: boolean;
-  win: boolean;
   bestTime: string;
-  lostTimes: number;
   winTimes: number;
-  setWinTimes: Dispatch<SetStateAction<number>>;
-  setWin: Dispatch<SetStateAction<boolean>>;
-  startCountdown: () => void;
-  resetCountdown: () => void;
+  lostTimes: number;
+  isActive: boolean;
+  hasFinished: boolean;
+  minuteLeft: string;
+  minuteRight: string;
+  secondLeft: string;
+  secondRight: string;
   stopCountdown: () => void;
+  resetCountdown: (n?: number) => void;
+  startCountdown: () => void;
+  setWin: Dispatch<SetStateAction<boolean>>;
+  setWinTimes: Dispatch<SetStateAction<number>>;
 }
 
 interface CountdownProviderProps {
@@ -44,6 +48,9 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
+  const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
+  const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
+
   const cards = () => document.querySelectorAll('.card');
 
   function startCountdown() {
@@ -63,11 +70,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     }, 1000);
   }
 
-  function resetCountdown() {
+  function resetCountdown(n: number = fullTime) {
     new Audio('/sounds/click.mp3').play();
     clearTimeout(countdownTimeout);
     setIsActive(false);
-    setTime(fullTime * 60);
+    setTime(n * 60);
     setHasFinished(false);
     setWin(false);
 
@@ -83,8 +90,6 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     setTime(time);
     setHasFinished(false);
 
-    const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
-    const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
     const bestTimeStr = `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
     if (bestTimeStr <= cookies.BEST_TIME || bestTimeStr !== '00:00') {
       setBestTime(bestTimeStr);
@@ -131,16 +136,20 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
 
   return (
     <CountdownConext.Provider value={{
+      win,
       minutes,
       seconds,
-      hasFinished,
       isActive,
-      win,
       bestTime,
-      lostTimes,
       winTimes,
-      setWinTimes,
+      lostTimes,
+      hasFinished,
+      minuteLeft,
+      minuteRight,
+      secondLeft,
+      secondRight,
       setWin,
+      setWinTimes,
       startCountdown,
       resetCountdown,
       stopCountdown,

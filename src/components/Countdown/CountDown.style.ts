@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+`;
+
 export const CountdownContainer = styled.div`
   display: flex;
   align-items: center;
@@ -57,11 +65,11 @@ export const CountdownButton = styled.button`
 
   outline: 0;
 
-  transition: background-color 0.2s;
+  transition: transform 0.2s cubic-bezier(0.84, 0.42, 0.29, 1.23);
 
   &:not(:disabled):hover {
     cursor: pointer;
-    background: ${({ theme }) => theme.secondary};
+    transform: scale(1.1);
   }
 `;
 
@@ -78,5 +86,21 @@ export const CountdownButtonActive = styled.button`
     background: ${({ theme }) => theme.secondary};
     color: ${({ theme }) => theme.color};
     cursor: not-allowed;
+  }
+`;
+
+export const LevelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  height: 100%;
+`;
+
+export const LevelButton = styled(CountdownButton)`
+  background-color: ${({ theme }) => theme.grey};
+
+  &.-selected {
+    background-color: ${({ theme }) => theme.secondary};
   }
 `;
