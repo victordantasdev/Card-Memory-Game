@@ -30,7 +30,7 @@ const Countdown = () => {
       </CountdownContainer>
 
       {hasFinished ? (
-        <CountdownButton onClick={resetCountdown}>
+        <CountdownButton onClick={startCountdown}>
           Game Over
         </CountdownButton>
       ) : (

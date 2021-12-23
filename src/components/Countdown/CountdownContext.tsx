@@ -10,10 +10,12 @@ interface CountdownContextData {
   seconds: number;
   hasFinished: boolean;
   isActive: boolean;
+  win: boolean;
   bestTime: string;
   lostTimes: number;
   winTimes: number;
   setWinTimes: Dispatch<SetStateAction<number>>;
+  setWin: Dispatch<SetStateAction<boolean>>;
   startCountdown: () => void;
   resetCountdown: () => void;
   stopCountdown: () => void;
@@ -28,7 +30,7 @@ export const CountdownConext = createContext({} as CountdownContextData);
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const fullTime = 0.1;
+  const fullTime = 5;
   const cookies = parseCookies();
 
   const [time, setTime] = useState(fullTime * 60);
@@ -37,6 +39,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const [bestTime, setBestTime] = useState(cookies.BEST_TIME || '00:00');
   const [lostTimes, setLostTimes] = useState(Number(cookies.LOST_TIMES) || 0);
   const [winTimes, setWinTimes] = useState(Number(cookies.WIN_TIMES) || 0);
+  const [win, setWin] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -44,7 +47,9 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const cards = () => document.querySelectorAll('.card');
 
   function startCountdown() {
+    new Audio('/sounds/click.mp3').play();
     setIsActive(true);
+    setWin(false);
 
     cards().forEach((card) => {
       card.classList.add('-active');
@@ -59,10 +64,12 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   }
 
   function resetCountdown() {
+    new Audio('/sounds/click.mp3').play();
     clearTimeout(countdownTimeout);
     setIsActive(false);
     setTime(fullTime * 60);
     setHasFinished(false);
+    setWin(false);
 
     cards().forEach((card) => {
       card.classList.add('-locked');
@@ -92,10 +99,28 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   useEffect(() => {
     if (isActive && time > 0) {
       countdownTimeout = setTimeout(() => {
+        new Audio('/sounds/tik.mp3').play();
         setTime(time - 1);
       }, 1000);
     } else if (isActive && time === 0) {
-      resetCountdown();
+      new Audio('/sounds/lose.mp3').play();
+
+      clearTimeout(countdownTimeout);
+      setIsActive(false);
+      setTime(time);
+      setHasFinished(true);
+      setWin(false);
+
+      setTimeout(() => {
+        setTime(fullTime * 60);
+        setHasFinished(false);
+      }, 1500);
+
+      cards().forEach((card) => {
+        card.classList.add('-locked');
+        card.classList.remove('-match');
+      });
+
       setLostTimes(Number(lostTimes) + 1);
       setCookie(null, 'LOST_TIMES', String(lostTimes + 1), {
         maxAge: 30 * 24 * 60 * 60,
@@ -110,10 +135,12 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       seconds,
       hasFinished,
       isActive,
+      win,
       bestTime,
       lostTimes,
       winTimes,
       setWinTimes,
+      setWin,
       startCountdown,
       resetCountdown,
       stopCountdown,

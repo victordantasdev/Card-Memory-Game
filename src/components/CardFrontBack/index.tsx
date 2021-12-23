@@ -20,6 +20,7 @@ const CardFrontBackWrapper = styled.article`
 
   &.-match {
     transform: rotateY(180deg);
+    pointer-events: none;
   }
 `;
 
@@ -38,6 +39,7 @@ const CardFrontBack = () => {
   const cards = CardsInfo;
 
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    new Audio('/sounds/card-flip.mp3').play();
     const origin = e.target as Element;
     const cardFrontBack = origin.parentNode?.parentNode?.parentNode?.parentNode as HTMLElement;
 
