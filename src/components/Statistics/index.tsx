@@ -17,6 +17,16 @@ const Statistics = () => {
     winTimesHard,
   } = useContext(CountdownConext);
 
+  const numToTime = (t: number) => {
+    const minutes = Math.floor(t / 60);
+    const seconds = t % 60;
+
+    const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
+    const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
+
+    return `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
+  };
+
   return (
     <StatisticsContainer>
       <StatisticsWrapper>
@@ -25,7 +35,7 @@ const Statistics = () => {
           <span>
             Easy:
             {' '}
-            {bestTimeEasy}
+            {numToTime(bestTimeEasy)}
           </span>
         </BestTime>
 
@@ -33,7 +43,7 @@ const Statistics = () => {
           <span>
             Medium:
             {' '}
-            {bestTimeMedium}
+            {numToTime(bestTimeMedium)}
           </span>
         </BestTime>
 
@@ -41,7 +51,7 @@ const Statistics = () => {
           <span>
             Hard:
             {' '}
-            {bestTimeHard}
+            {numToTime(bestTimeHard)}
           </span>
         </BestTime>
       </StatisticsWrapper>
