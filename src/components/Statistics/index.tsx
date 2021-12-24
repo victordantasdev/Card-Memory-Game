@@ -4,9 +4,17 @@ import { StatisticsContainer, BestTime, StatisticsWrapper } from './Statistics.s
 
 const Statistics = () => {
   const {
-    bestTime,
-    lostTimes,
-    winTimes,
+    bestTimeEasy,
+    lostTimesEasy,
+    winTimesEasy,
+
+    bestTimeMedium,
+    lostTimesMedium,
+    winTimesMedium,
+
+    bestTimeHard,
+    lostTimesHard,
+    winTimesHard,
   } = useContext(CountdownConext);
 
   return (
@@ -14,7 +22,27 @@ const Statistics = () => {
       <StatisticsWrapper>
         <h2>Best Time</h2>
         <BestTime className="best-time">
-          <span>{bestTime}</span>
+          <span>
+            Easy:
+            {' '}
+            {bestTimeEasy}
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            Medium:
+            {' '}
+            {bestTimeMedium}
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            Hard:
+            {' '}
+            {bestTimeHard}
+          </span>
         </BestTime>
       </StatisticsWrapper>
 
@@ -22,9 +50,25 @@ const Statistics = () => {
         <h2>You win</h2>
         <BestTime className="best-time">
           <span>
-            {winTimes}
+            {winTimesEasy}
             {' '}
-            times
+            times on Easy
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            {winTimesMedium}
+            {' '}
+            times on Medium
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            {winTimesHard}
+            {' '}
+            times on Hard
           </span>
         </BestTime>
       </StatisticsWrapper>
@@ -33,9 +77,25 @@ const Statistics = () => {
         <h2>You lose</h2>
         <BestTime className="best-time">
           <span>
-            {lostTimes}
+            {lostTimesEasy}
             {' '}
-            times
+            times on Easy
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            {lostTimesMedium}
+            {' '}
+            times on Medium
+          </span>
+        </BestTime>
+
+        <BestTime className="best-time">
+          <span>
+            {lostTimesHard}
+            {' '}
+            times on Hard
           </span>
         </BestTime>
       </StatisticsWrapper>

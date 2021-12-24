@@ -13,17 +13,21 @@ export const StatisticsContainer = styled.div`
 export const BestTime = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
 `;
 
 export const StatisticsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  width: 130px;
+  width: 180px;
   background-color: ${({ theme }) => theme.secondary};
   border-radius: 10px;
   margin: 8px;
-  padding: 8px;
+  padding: 16px;
+  pointer-events: none;
+
+  h2 {
+    margin-top: 0;
+  }
 `;

@@ -8,10 +8,10 @@ import { CountdownConext } from './CountdownContext';
 const Countdown = () => {
   const {
     minuteLeft,
-    minuteRight,
-    secondLeft,
-    secondRight,
     isActive,
+    secondLeft,
+    minuteRight,
+    secondRight,
     hasFinished,
     startCountdown,
     resetCountdown,
@@ -38,6 +38,17 @@ const Countdown = () => {
     });
   };
 
+  const startWithLevel = () => {
+    const $level = document.querySelector('.-selected')?.textContent;
+    if ($level === 'Easy') {
+      startCountdown(5);
+    } else if ($level === 'Medium') {
+      startCountdown(3);
+    } else if ($level === 'Hard') {
+      startCountdown(2);
+    }
+  };
+
   return (
     <Container>
       <div>
@@ -54,7 +65,7 @@ const Countdown = () => {
         </CountdownContainer>
 
         {hasFinished ? (
-          <CountdownButton onClick={startCountdown}>
+          <CountdownButton onClick={startWithLevel}>
             Game Over
           </CountdownButton>
         ) : (
@@ -64,7 +75,7 @@ const Countdown = () => {
                 Reset Game
               </CountdownButton>
             ) : (
-              <CountdownButton onClick={startCountdown}>
+              <CountdownButton onClick={startWithLevel}>
                 Start Game
               </CountdownButton>
             )}

@@ -19,9 +19,15 @@ const BoardGame = () => {
   const {
     win,
     setWin,
-    winTimes,
-    setWinTimes,
     stopCountdown,
+
+    winTimesEasy,
+    winTimesMedium,
+    winTimesHard,
+
+    setWinTimesEasy,
+    setWinTimesMedium,
+    setWinTimesHard,
   } = useContext(CountdownConext);
 
   const handleClick = () => {
@@ -52,16 +58,32 @@ const BoardGame = () => {
       // user win
       const totalCards = document.querySelectorAll('.card');
       const totalMatch = document.querySelectorAll('.-match');
+      const level = document.querySelector('.-selected')?.textContent;
       if (totalMatch.length === totalCards.length) {
         new Audio('/sounds/win.mp3').play();
-        stopCountdown();
+        stopCountdown(level);
         setWin(true);
 
-        setWinTimes(Number(winTimes) + 1);
-        setCookie(null, 'WIN_TIMES', String(winTimes + 1), {
-          maxAge: 30 * 24 * 60 * 60,
-          path: '/',
-        });
+        const $level = document.querySelector('.-selected')?.textContent;
+        if ($level === 'Easy') {
+          setWinTimesEasy(Number(winTimesEasy) + 1);
+          setCookie(null, 'WIN_TIMES_EASY', String(winTimesEasy + 1), {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
+        } else if ($level === 'Medium') {
+          setWinTimesMedium(Number(winTimesMedium) + 1);
+          setCookie(null, 'WIN_TIMES', String(winTimesMedium + 1), {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
+        } else if ($level === 'Hard') {
+          setWinTimesHard(Number(winTimesHard) + 1);
+          setCookie(null, 'WIN_TIMES', String(winTimesHard + 1), {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
+        }
       }
     } else if (cardsActive.length > 2) {
       cardsActive.forEach((card) => {

@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   width: 100%;
 `;
 
@@ -24,6 +24,7 @@ export const CountdownContainer = styled.div`
     font-size: 2rem;
     text-align: center;
     margin-top: 10px;
+    pointer-events: none;
   }
 
   & > div span {
