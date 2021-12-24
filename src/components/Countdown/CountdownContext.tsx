@@ -10,15 +10,15 @@ interface CountdownContextData {
   minutes: number;
   seconds: number;
 
-  bestTimeEasy: string;
+  bestTimeEasy: number;
   lostTimesEasy: number;
   winTimesEasy: number;
 
-  bestTimeMedium: string;
+  bestTimeMedium: number;
   lostTimesMedium: number;
   winTimesMedium: number;
 
-  bestTimeHard: string;
+  bestTimeHard: number;
   lostTimesHard: number;
   winTimesHard: number;
 
@@ -55,15 +55,15 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const [hasFinished, setHasFinished] = useState(false);
   const [win, setWin] = useState(false);
 
-  const [bestTimeEasy, setBestTimeEasy] = useState(cookies.BEST_TIME_EASY || '00:00');
+  const [bestTimeEasy, setBestTimeEasy] = useState(Number(cookies.BEST_TIME_EASY) || 0);
   const [lostTimesEasy, setLostTimesEasy] = useState(Number(cookies.LOST_TIMES_EASY) || 0);
   const [winTimesEasy, setWinTimesEasy] = useState(Number(cookies.WIN_TIMES_EASY) || 0);
 
-  const [bestTimeMedium, setBestTimeMedium] = useState(cookies.BEST_TIME || '00:00');
+  const [bestTimeMedium, setBestTimeMedium] = useState(Number(cookies.BEST_TIME_MEDIUM) || 0);
   const [lostTimesMedium, setLostTimesMedium] = useState(Number(cookies.LOST_TIMES) || 0);
   const [winTimesMedium, setWinTimesMedium] = useState(Number(cookies.WIN_TIMES) || 0);
 
-  const [bestTimeHard, setBestTimeHard] = useState(cookies.BEST_TIME_HARD || '00:00');
+  const [bestTimeHard, setBestTimeHard] = useState(Number(cookies.BEST_TIME_HARD) || 0);
   const [lostTimesHard, setLostTimesHard] = useState(Number(cookies.LOST_TIMES_HARD) || 0);
   const [winTimesHard, setWinTimesHard] = useState(Number(cookies.WIN_TIMES_HARD) || 0);
 
@@ -113,32 +113,29 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     setIsActive(true);
     setTime(time);
     setHasFinished(false);
-
-    const bestTimeStr = `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
-
     if (level === 'Easy') {
-      if (bestTimeStr <= cookies.BEST_TIME_EASY || bestTimeStr !== '00:00') {
-        setBestTimeEasy(bestTimeStr);
+      if (time >= Number(cookies.BEST_TIME_EASY) || bestTimeEasy === 0) {
+        setBestTimeEasy(time);
 
-        setCookie(null, 'BEST_TIME_EASY', bestTimeStr, {
+        setCookie(null, 'BEST_TIME_EASY', time.toString(), {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
         });
       }
     } else if (level === 'Medium') {
-      if (bestTimeStr <= cookies.BEST_TIME_MEDIUM || bestTimeStr !== '00:00') {
-        setBestTimeMedium(bestTimeStr);
+      if (time >= Number(cookies.BEST_TIME_MEDIUM) || bestTimeEasy === 0) {
+        setBestTimeMedium(time);
 
-        setCookie(null, 'BEST_TIME_MEDIUM', bestTimeStr, {
+        setCookie(null, 'BEST_TIME_MEDIUM', time.toString(), {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
         });
       }
     } else if (level === 'Hard') {
-      if (bestTimeStr <= cookies.BEST_TIME_HARD || bestTimeStr !== '00:00') {
-        setBestTimeHard(bestTimeStr);
+      if (time >= Number(cookies.BEST_TIME_HARD) || bestTimeEasy === 0) {
+        setBestTimeHard(time);
 
-        setCookie(null, 'BEST_TIME_HARD', bestTimeStr, {
+        setCookie(null, 'BEST_TIME_HARD', time.toString(), {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
         });
