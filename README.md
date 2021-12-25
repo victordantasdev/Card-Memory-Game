@@ -18,5 +18,19 @@ When the User clicks on the 2nd card:
 
 ## Bonus features
 
-- [x] Use can choose between multiple levels of difficulty (Easy, Medium, Hard). Increased difficulty means: decreasing the time available to complete and/or increasing the number of cards
+- [x] User can choose between multiple levels of difficulty (Easy, Medium, Hard). Increased difficulty means: decreasing the time available to complete and/or increasing the number of cards
 - [x] User can see the game statistics (nr. of times he won / he lost, best time for each level)
+
+## Result of project
+
+When user start game:
+
+https://user-images.githubusercontent.com/64330605/147393565-6797cfaa-10c8-4764-bf81-269a8e672a98.mp4
+
+User can choose between multiple levels of difficulty:
+
+https://user-images.githubusercontent.com/64330605/147393568-644cdd81-6620-41ed-b0b0-7902d4d99957.mp4
+
+When user lose game:
+
+https://user-images.githubusercontent.com/64330605/147393567-82fb4358-97c9-4252-8b95-37967c7a0229.mp4
