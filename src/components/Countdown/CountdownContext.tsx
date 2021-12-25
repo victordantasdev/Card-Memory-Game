@@ -11,27 +11,31 @@ interface CountdownContextData {
   seconds: number;
 
   bestTimeEasy: number;
-  lostTimesEasy: number;
   winTimesEasy: number;
+  lostTimesEasy: number;
 
   bestTimeMedium: number;
-  lostTimesMedium: number;
   winTimesMedium: number;
+  lostTimesMedium: number;
 
   bestTimeHard: number;
-  lostTimesHard: number;
   winTimesHard: number;
+  lostTimesHard: number;
 
   isActive: boolean;
-  hasFinished: boolean;
   minuteLeft: string;
-  minuteRight: string;
   secondLeft: string;
+  minuteRight: string;
   secondRight: string;
-  resetCountdown: (n?: number, l?: string) => void;
-  stopCountdown: (level?: string | null | undefined) => void;
+  isModalOpen: boolean;
+  hasFinished: boolean;
+  level: string | null | undefined;
+
   startCountdown: (t: number) => void;
+  resetCountdown: (n?: number) => void;
   setWin: Dispatch<SetStateAction<boolean>>;
+  toggleModal: (level?: string | null | undefined) => void;
+  stopCountdown: (level?: string | null | undefined) => void;
 
   setWinTimesEasy: Dispatch<SetStateAction<number>>;
   setWinTimesMedium: Dispatch<SetStateAction<number>>;
@@ -50,10 +54,12 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   const [fullTime, setFullTime] = useState(5);
   const cookies = parseCookies();
 
-  const [time, setTime] = useState(fullTime * 60);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
   const [win, setWin] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [time, setTime] = useState(fullTime * 60);
+  const [isModalOpen, setModalState] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
+  const [level, setLevel] = useState<string | null | undefined>('');
 
   const [bestTimeEasy, setBestTimeEasy] = useState(Number(cookies.BEST_TIME_EASY) || 0);
   const [lostTimesEasy, setLostTimesEasy] = useState(Number(cookies.LOST_TIMES_EASY) || 0);
@@ -94,7 +100,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     }, 1000);
   }
 
-  function resetCountdown(n: number = fullTime, l: string = 'Easy') {
+  function resetCountdown(n: number = fullTime) {
     new Audio('/sounds/click.mp3').play();
     clearTimeout(countdownTimeout);
     setIsActive(false);
@@ -108,12 +114,12 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     });
   }
 
-  function stopCountdown(level: string | null | undefined) {
+  function stopCountdown($level: string | null | undefined) {
     clearTimeout(countdownTimeout);
     setIsActive(true);
     setTime(time);
     setHasFinished(false);
-    if (level === 'Easy') {
+    if ($level === 'Easy') {
       if (time >= Number(cookies.BEST_TIME_EASY) || bestTimeEasy === 0) {
         setBestTimeEasy(time);
 
@@ -122,8 +128,8 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
           path: '/',
         });
       }
-    } else if (level === 'Medium') {
-      if (time >= Number(cookies.BEST_TIME_MEDIUM) || bestTimeEasy === 0) {
+    } else if ($level === 'Medium') {
+      if (time >= Number(cookies.BEST_TIME_MEDIUM) || bestTimeMedium === 0) {
         setBestTimeMedium(time);
 
         setCookie(null, 'BEST_TIME_MEDIUM', time.toString(), {
@@ -131,8 +137,8 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
           path: '/',
         });
       }
-    } else if (level === 'Hard') {
-      if (time >= Number(cookies.BEST_TIME_HARD) || bestTimeEasy === 0) {
+    } else if ($level === 'Hard') {
+      if (time >= Number(cookies.BEST_TIME_HARD) || bestTimeHard === 0) {
         setBestTimeHard(time);
 
         setCookie(null, 'BEST_TIME_HARD', time.toString(), {
@@ -141,6 +147,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
         });
       }
     }
+  }
+
+  function toggleModal($level: string | null | undefined) {
+    setLevel($level);
+    setModalState(!isModalOpen);
   }
 
   useEffect(() => {
@@ -152,11 +163,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     } else if (isActive && time === 0) {
       new Audio('/sounds/lose.mp3').play();
 
-      clearTimeout(countdownTimeout);
-      setIsActive(false);
       setTime(time);
-      setHasFinished(true);
       setWin(false);
+      setIsActive(false);
+      setHasFinished(true);
+      clearTimeout(countdownTimeout);
 
       setTimeout(() => {
         setTime(fullTime * 60);
@@ -194,9 +205,11 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   return (
     <CountdownConext.Provider value={{
       win,
+      level,
       minutes,
       seconds,
       isActive,
+      isModalOpen,
 
       bestTimeEasy,
       lostTimesEasy,
@@ -210,13 +223,14 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
       lostTimesHard,
       winTimesHard,
 
-      hasFinished,
       minuteLeft,
-      minuteRight,
       secondLeft,
+      hasFinished,
+      minuteRight,
       secondRight,
-      setWin,
 
+      setWin,
+      toggleModal,
       setWinTimesEasy,
       setWinTimesMedium,
       setWinTimesHard,
