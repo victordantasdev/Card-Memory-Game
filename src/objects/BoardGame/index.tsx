@@ -31,6 +31,33 @@ const BoardGame = () => {
     setWinTimesHard,
   } = useContext(CountdownConext);
 
+  const winGame = ($level?: string | null | undefined) => {
+    new Audio('/sounds/win.mp3').play();
+    setWin(true);
+    toggleModal($level);
+    stopCountdown($level);
+
+    if ($level === 'Easy') {
+      setWinTimesEasy(Number(winTimesEasy) + 1);
+      setCookie(null, 'WIN_TIMES_EASY', String(winTimesEasy + 1), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+    } else if ($level === 'Medium') {
+      setWinTimesMedium(Number(winTimesMedium) + 1);
+      setCookie(null, 'WIN_TIMES', String(winTimesMedium + 1), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+    } else if ($level === 'Hard') {
+      setWinTimesHard(Number(winTimesHard) + 1);
+      setCookie(null, 'WIN_TIMES', String(winTimesHard + 1), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+    }
+  };
+
   const handleClick = () => {
     const cardsActive = document.querySelectorAll('.-active');
 
@@ -61,30 +88,7 @@ const BoardGame = () => {
       const totalMatch = document.querySelectorAll('.-match');
       const $level = document.querySelector('.-selected')?.textContent;
       if (totalMatch.length === totalCards.length) {
-        new Audio('/sounds/win.mp3').play();
-        setWin(true);
-        toggleModal($level);
-        stopCountdown($level);
-
-        if ($level === 'Easy') {
-          setWinTimesEasy(Number(winTimesEasy) + 1);
-          setCookie(null, 'WIN_TIMES_EASY', String(winTimesEasy + 1), {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-          });
-        } else if ($level === 'Medium') {
-          setWinTimesMedium(Number(winTimesMedium) + 1);
-          setCookie(null, 'WIN_TIMES', String(winTimesMedium + 1), {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-          });
-        } else if ($level === 'Hard') {
-          setWinTimesHard(Number(winTimesHard) + 1);
-          setCookie(null, 'WIN_TIMES', String(winTimesHard + 1), {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-          });
-        }
+        winGame($level);
       }
     } else if (cardsActive.length > 2) {
       cardsActive.forEach((card) => {
@@ -99,6 +103,7 @@ const BoardGame = () => {
       <BoardGameWrapper onClick={() => handleClick()}>
         <CardFrontBack />
       </BoardGameWrapper>
+      {/* <button type="button" onClick={() => winGame()}>Win Game</button> */}
     </>
   );
 };

@@ -6,11 +6,9 @@ import {
 
 const Modal = () => {
   const {
+    time,
     level,
     isModalOpen,
-    bestTimeEasy,
-    bestTimeMedium,
-    bestTimeHard,
     toggleModal,
   } = useContext(CountdownConext);
 
@@ -21,17 +19,21 @@ const Modal = () => {
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
-    return `${minuteLeft}${minuteRight}:${secondLeft}${secondRight}`;
+    if (t <= 59) {
+      return `${secondLeft}${secondRight} seconds`;
+    }
+
+    return `${minuteLeft}${minuteRight}min and ${secondLeft}${secondRight}s`;
+    // return `${minuteLeft}${minuteRight}:${secondLeft}${secondRight} minutes`;
   };
 
   let timeToFinish = '';
-
   if (level === 'Easy') {
-    timeToFinish = numToTime((5 * 60) - bestTimeEasy);
+    timeToFinish = numToTime((5 * 60) - time);
   } else if (level === 'Medium') {
-    timeToFinish = numToTime((3 * 60) - bestTimeMedium);
+    timeToFinish = numToTime((3 * 60) - time);
   } else if (level === 'Hard') {
-    timeToFinish = numToTime((2 * 60) - bestTimeHard);
+    timeToFinish = numToTime((2 * 60) - time);
   }
 
   return (
@@ -58,7 +60,7 @@ const Modal = () => {
             x
           </Button>
           <DialogInfo>
-            <h2>YAY! You Won!</h2>
+            <h2>🎉 YAY! You Win! 🎉</h2>
             <div>
               You finished the game in
               <span>
@@ -66,7 +68,7 @@ const Modal = () => {
                 {timeToFinish}
                 {' '}
               </span>
-              seconds on
+              on
               <span>
                 {' '}
                 {level}

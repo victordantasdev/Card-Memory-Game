@@ -5,9 +5,14 @@ import Modal from '../components/Modal';
 import Statistics from '../components/Statistics';
 import BoardGame from '../objects/BoardGame';
 import { GameData, HomeWrapper } from '../styles/index.styled';
+import ForkMe from '../components/ForkMe';
 
 const Home = () => (
   <HomeWrapper>
+    <ForkMe
+      bgColor="#ff5555"
+      repo="https://github.com/victordantasdev/Card-Memory-Game"
+    />
     <h1>Card Memory Game</h1>
 
     <CountdownProvider>

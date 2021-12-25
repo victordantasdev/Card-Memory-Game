@@ -55,6 +55,7 @@ export const CountdownButton = styled.button`
   align-items: center;
   justify-content: center;
 
+  padding: 0;
   border: 0;
   border-radius: 5px;
 
@@ -70,7 +71,10 @@ export const CountdownButton = styled.button`
 
   &:not(:disabled):hover {
     cursor: pointer;
-    transform: scale(1.1);
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(4px);
   }
 `;
 
@@ -100,6 +104,7 @@ export const LevelWrapper = styled.div`
 
 export const LevelButton = styled(CountdownButton)`
   background-color: ${({ theme }) => theme.gray};
+  transition: background-color 0.2s ${({ theme }) => theme.animate};
 
   &.-selected {
     background-color: ${({ theme }) => theme.secondary};

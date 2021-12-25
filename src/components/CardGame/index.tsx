@@ -9,17 +9,19 @@ interface Props {
 
 const Card = styled.article`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   width: 130px;
   height: 160px;
   border-radius: 8px;
-  background-color: #051932;
+  background-color: ${({ theme }) => theme.Background};
   border: 2px solid ${({ theme }) => theme.primary};
+  padding: 8px;
 
   & > img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 8px;
   }
 

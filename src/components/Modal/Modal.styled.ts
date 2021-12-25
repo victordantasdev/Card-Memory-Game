@@ -4,7 +4,7 @@ export const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
   position: fixed;
   top: 0;
@@ -36,7 +36,8 @@ interface MotionProps {
 
 export const open = keyframes`
   from {
-    transform: translate3d(0, 100%,0);
+    /* transform: translate3d(0, 100%, 0); */
+    transform: translate3d(0, -100%, 0);
   }
 
   to {
@@ -50,7 +51,8 @@ export const close = keyframes`
   }
 
   to {
-    transform: translate3d(0, 100%,0);
+    /* transform: translate3d(0, 100%, 0); */
+    transform: translate3d(0, -100%, 0);
   }
 `;
 
@@ -72,12 +74,13 @@ export const DialogWrapper = styled.div`
   flex-direction: column;
   justify-content: space-around;
 
-  width: 400px;
+  width: 420px;
   height: 300px;
   position: fixed;
   border-radius: 8px;
   padding: 32px;
 
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.9), 0 4px 6px -4px rgb(0 0 0 / 0.9);
   background-color: ${({ theme }) => theme.Background};
 `;
 
@@ -118,6 +121,7 @@ export const DialogInfo = styled.div`
   text-justify: inter-word;
 
   & > div > span {
+    font-weight: bold;
     color: ${({ theme }) => theme.Pink};
   }
 `;
