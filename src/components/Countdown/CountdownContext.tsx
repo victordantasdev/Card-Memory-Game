@@ -7,6 +7,7 @@ import { parseCookies, setCookie } from 'nookies';
 
 interface CountdownContextData {
   win: boolean;
+  time: number;
   minutes: number;
   seconds: number;
 
@@ -205,6 +206,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
   return (
     <CountdownConext.Provider value={{
       win,
+      time,
       level,
       minutes,
       seconds,

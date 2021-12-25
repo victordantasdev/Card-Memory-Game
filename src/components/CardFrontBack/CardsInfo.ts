@@ -7,8 +7,8 @@ const CardsInfo = [
   },
   {
     id: 2,
-    icon: 'nextjs',
-    altIcon: 'Next JS Logo',
+    icon: 'c',
+    altIcon: 'c Logo',
   },
   {
     id: 3,
@@ -17,8 +17,8 @@ const CardsInfo = [
   },
   {
     id: 4,
-    icon: 'html',
-    altIcon: 'HTML Logo',
+    icon: 'raspberry',
+    altIcon: 'raspberry Logo',
   },
   {
     id: 5,
@@ -34,8 +34,8 @@ const CardsInfo = [
   // 2nd row
   {
     id: 7,
-    icon: 'css',
-    altIcon: 'CSS Logo',
+    icon: 'github',
+    altIcon: 'github Logo',
   },
   {
     id: 8,
@@ -44,13 +44,13 @@ const CardsInfo = [
   },
   {
     id: 9,
-    icon: 'nextjs',
-    altIcon: 'Next JS Logo',
+    icon: 'c',
+    altIcon: 'c Logo',
   },
   {
     id: 10,
-    icon: 'css',
-    altIcon: 'CSS Logo',
+    icon: 'github',
+    altIcon: 'github Logo',
   },
   {
     id: 11,
@@ -59,8 +59,8 @@ const CardsInfo = [
   },
   {
     id: 12,
-    icon: 'html',
-    altIcon: 'HTML Logo',
+    icon: 'raspberry',
+    altIcon: 'raspberry Logo',
   },
 ];
 
