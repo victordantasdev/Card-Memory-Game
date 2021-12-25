@@ -66,7 +66,7 @@ export const CountdownButton = styled.button`
 
   outline: 0;
 
-  transition: transform 0.2s cubic-bezier(0.84, 0.42, 0.29, 1.23);
+  transition: transform 0.2s ${({ theme }) => theme.animate};
 
   &:not(:disabled):hover {
     cursor: pointer;
@@ -99,7 +99,7 @@ export const LevelWrapper = styled.div`
 `;
 
 export const LevelButton = styled(CountdownButton)`
-  background-color: ${({ theme }) => theme.grey};
+  background-color: ${({ theme }) => theme.gray};
 
   &.-selected {
     background-color: ${({ theme }) => theme.secondary};

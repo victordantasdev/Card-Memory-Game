@@ -19,6 +19,7 @@ const BoardGame = () => {
   const {
     win,
     setWin,
+    toggleModal,
     stopCountdown,
 
     winTimesEasy,
@@ -58,13 +59,13 @@ const BoardGame = () => {
       // user win
       const totalCards = document.querySelectorAll('.card');
       const totalMatch = document.querySelectorAll('.-match');
-      const level = document.querySelector('.-selected')?.textContent;
+      const $level = document.querySelector('.-selected')?.textContent;
       if (totalMatch.length === totalCards.length) {
         new Audio('/sounds/win.mp3').play();
-        stopCountdown(level);
         setWin(true);
+        toggleModal($level);
+        stopCountdown($level);
 
-        const $level = document.querySelector('.-selected')?.textContent;
         if ($level === 'Easy') {
           setWinTimesEasy(Number(winTimesEasy) + 1);
           setCookie(null, 'WIN_TIMES_EASY', String(winTimesEasy + 1), {

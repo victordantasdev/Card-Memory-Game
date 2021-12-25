@@ -14,9 +14,9 @@ When the User clicks on the 2nd card:
 
 - [x] If there is a match, the 2 cards will be eliminated from the game (either hide/remove them or leave them in the `visible` state)
 - [x] If there isn't a match, the 2 cards will flip back to their original state (`hidden` state)
-- [ ] When all the matches have been found, the User can see a dialog box showing a Congratulations message with a counter displaying the time it took to finish the game
+- [x] When all the matches have been found, the User can see a dialog box showing a Congratulations message with a counter displaying the time it took to finish the game
 
 ## Bonus features
 
-- [ ] Use can choose between multiple levels of difficulty (Easy, Medium, Hard). Increased difficulty means: decreasing the time available to complete and/or increasing the number of cards
+- [x] Use can choose between multiple levels of difficulty (Easy, Medium, Hard). Increased difficulty means: decreasing the time available to complete and/or increasing the number of cards
 - [x] User can see the game statistics (nr. of times he won / he lost, best time for each level)
