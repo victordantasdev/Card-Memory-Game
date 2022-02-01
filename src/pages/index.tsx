@@ -1,11 +1,11 @@
 import React from 'react';
+import { ForkMe } from 'fork-me-corner';
 import Countdown from '../components/Countdown';
 import { CountdownProvider } from '../components/Countdown/CountdownContext';
 import Modal from '../components/Modal';
 import Statistics from '../components/Statistics';
 import BoardGame from '../objects/BoardGame';
 import { GameData, HomeWrapper } from '../styles/index.styled';
-import ForkMe from '../components/ForkMe';
 
 const Home = () => (
   <HomeWrapper>
